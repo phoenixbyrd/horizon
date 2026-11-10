@@ -1,28 +1,30 @@
-name: Build Horizon ARM64
+name: Build ARM64 Binary
 
 on:
   workflow_dispatch:
+  push:
+    branches: [ main ]
 
 jobs:
-    build:
-      runs-on: ubuntu-24.04-arm  # This uses GitHub's native ARM64 cloud hardware!
-      
-      steps:
-        - name: Checkout Horizon Source Code
-          uses: actions/checkout@v4
-          with:
-            repository: horizon-rust/horizon
-            ref: main
+  build-arm64:
+    runs-on: ubuntu-24.04-arm
+    
+    steps:
+      - name: Checkout Horizon Repository
+        uses: actions/checkout@v4
+        with:
+          repository: horizon-rust/horizon
+          ref: main
 
-        - name: Install Rustup & Toolchain
-          uses: actions-rust-lang/setup-rust-toolchain@v1
+      - name: Set up Rust Toolchain
+        uses: actions-rust-lang/setup-rust-toolchain@v1
 
-        - name: Build Release Binaries
-          run: |
-            cargo build --release
+      - name: Build Release Binary
+        run: |
+          cargo build --release
 
-        - name: Upload Compiled Files
-          uses: actions/upload-artifact@v4
-          with:
-            name: horizon-linux-arm64
-            path: target/release/
+      - name: Upload Compiled Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: horizon-linux-arm64
+          path: target/release/horizon
