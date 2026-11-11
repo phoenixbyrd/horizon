@@ -23,6 +23,10 @@ jobs:
         with:
           toolchain: nightly
 
+      - name: Fix Recursion Limit in Source
+        run: |
+          echo '#![recursion_limit = "512"]' | cat - crates/horizon-client-render/src/lib.rs > temp && mv temp crates/horizon-client-render/src/lib.rs
+
       - name: Build Release Binary
         run: |
           cargo build --release
