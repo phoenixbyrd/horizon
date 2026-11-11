@@ -27,6 +27,8 @@ jobs:
           toolchain: nightly
 
       - name: Build Release Binary
+        env:
+          RUSTFLAGS: "-C recursion-limit=512"
         run: |
           cargo build --release
 
