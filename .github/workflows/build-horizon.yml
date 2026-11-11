@@ -10,11 +10,8 @@ jobs:
     runs-on: ubuntu-24.04-arm
     
     steps:
-      - name: Checkout Horizon Repository
+      - name: Checkout Repository
         uses: actions/checkout@v4
-        with:
-          repository: horizon-rust/horizon
-          ref: main
 
       - name: Install System Dependencies
         run: |
@@ -27,8 +24,6 @@ jobs:
           toolchain: nightly
 
       - name: Build Release Binary
-        env:
-          RUSTFLAGS: "-C recursion-limit=512"
         run: |
           cargo build --release
 
@@ -36,4 +31,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: horizon-linux-arm64
-          path: target/release/horizon
+          path: target/release/
