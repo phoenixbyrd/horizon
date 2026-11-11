@@ -24,8 +24,10 @@ jobs:
           toolchain: nightly
 
       - name: Build Release Binary
+        env:
+          RUSTFLAGS: "-Z extra-plugins"
         run: |
-          cargo build --release
+          cargo +nightly build --release
 
       - name: Upload Compiled Artifact
         uses: actions/upload-artifact@v4
